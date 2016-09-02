@@ -17,7 +17,7 @@ DEBUG = False
 #If FALSE you MUST USE Cron&Crontab check README file
 ASDAEMON = False
 #if ASDAEMON is TRUE set sleep time suggested 60
-SLEEPASDAEMON = 10
+SLEEPASDAEMON = 60
 #Notification on updates not implemented yet
 CHECK4UPDATES = True
 #Set base URL for links
@@ -49,6 +49,13 @@ DBPASSDEV = '12345'
 DBSCHEMADEV = 'ghost'
 
 #DB Mail - Internal Control For Sent Posts
-MAILDATABASE = "ghostsubscribemail"
-MAILTABLE = "mail_news"
-GHOSTTABLE = "posts"
+MAILDATABASE = 'ghostsubscribemail'
+MAILTABLE = 'mail_news'
+GHOSTTABLE = 'posts'
+
+#html color selection
+BACKGROUND = '#FFFFFF'
+NEWSTITLE = '#000000'
+NEWSCOMMENT = '#5882FA'
+DIVTITLE = '#A4A4A4'
+DIVCONTENT = '#5882FA'

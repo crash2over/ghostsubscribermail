@@ -103,12 +103,12 @@ class MyMail:
     def get_body(self):
         postlen = len(self.listposts)
         body = '<body>' \
-        '    <div style="background-color:#FE642E; color:white;">\n' \
+        '    <div style="background-color: ' + config.BACKGROUND + '; color:white;">\n' \
         '        <div style="padding:50px; color:white;">\n' \
         '            <img src="' + self.logo + '" height="50" width="240" align="center">\n' \
         '            <div class="container">\n' \
-        '                <h1 style="color: #E1F5A9;">Newsletter For: ' + self.recipient.split('@', 1)[0] + '</h1>\n' \
-        '                <h2 style="color: #CEF6F5;">Check The Last Posts: </h2><br>\n'
+        '                <h1 style="color: ' + config.NEWSTITLE + ';">Newsletter For: ' + self.recipient.split('@', 1)[0] + '</h1>\n' \
+        '                <h2 style="color: ' + config.NEWSCOMMENT + ';">Check The Last Posts: </h2><br>\n'
         for i in range(postlen):
             body += self.get_posts_divs(self.listposts[i]['title'], self.listposts[i]['markdown'], self.listposts[i]['link'])
         body += '        <br><br><br><br>\n' \
@@ -121,8 +121,8 @@ class MyMail:
 
     def get_posts_divs(self, title, markdown, link):
         markdown = (markdown[:150] + '...') if len(markdown) > 150 else (markdown + '...')
-        div = '           <li><h3 style="color: #FFFFFF;">' + title + '</h3></li>\n' \
-        '                <div style="color: #A9BCF5;width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
+        div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
+        '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
         '                    <b>' + markdown + '</b><br><br>\n' \
         '                    <a href="' + link + '" style="font-size: 70%;color=white;"> Check More About This Here </a>\n' \
         '                </div>\n'
