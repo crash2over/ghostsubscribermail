@@ -34,14 +34,14 @@ MAILPASS = 'mypass'
 #Who is sending the mails?
 MAILSENDER = 'newsletter@myserver.com'
 
-#DB Production
+#DB Production DEBUG=False
 DBSERVERPROD = '127.0.0.1'
 DBPORTPROD = '3306'
 DBUSERPROD = 'root'
 DBPASSPROD = '12345'
 DBSCHEMAPROD = 'ghost'
 
-#DB Develop
+#DB Develop DEBUG=True
 DBSERVERDEV = '127.0.0.1'
 DBPORTDEV = '3306'
 DBUSERDEV = 'root'
