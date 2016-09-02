@@ -122,7 +122,7 @@ class MyMail:
 
     def get_posts_divs(self, title, markdown, link):
         nomarkdowns = re.sub('[!#$\[\]\(\)]', '', markdown)
-        nourl = re.sub('((http|https):+(/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', nomarkdowns)
+        nourl = re.sub('((/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', re.sub('((http|https):+(/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', nomarkdowns))
         no2encode = nourl.decode('utf-8').encode('raw_unicode_escape').decode('utf-8')
         html = no2encode.encode('ascii', 'xmlcharrefreplace')
         html = (html[:150] + '...') if len(html) > 150 else (html + '...')
