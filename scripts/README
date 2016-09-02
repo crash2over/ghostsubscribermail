@@ -25,14 +25,12 @@ mysql -u user -p < mydb.sql
 #Now if you set program as a daemon you must set an init script in /etc/init.d/ and update-rc.d for user runlevels
 #you can find one in this folder and an install script for make it easy for you
 
-installghostmailsys.sh
+installghostmailsys.sh install or installghostmailsys.sh uninstall
 
 
 #Now if you set program not as a daemon you must use Cron & Crontab to program a task here is the line
 #Open crontab located in /etc/crontab and add this line and set your rute:
 
-0    20  * * *   root    python /opt/ghostsubscribermail/main.py &
+installghostmailsys.sh croninstall or installghostmailsys.sh cronuninstall
 
-#just restart cron
-
-sudo service cron restart
+#If you missed configuration file you can still change it route /opt/ghostsubscribermail
