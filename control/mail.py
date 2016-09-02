@@ -113,7 +113,7 @@ class MyMail:
         for i in range(postlen):
             body += self.get_posts_divs(self.listposts[i]['title'], self.listposts[i]['markdown'], self.listposts[i]['link'])
         body += '        <br><br><br><br>\n' \
-        '                <p style="color: #E1F5A9;font-size: 90%;pointer-events: none;cursor: default;"><b>Copyright © ViajandoConAlas.com.mx</b></p>\n' \
+        '                <p style="color: ' + config.FOOTER + ';font-size: 90%;pointer-events: none;cursor: default;"><b>Copyright © ViajandoConAlas.com.mx</b></p>\n' \
         '            </div>\n' \
         '        </div>\n' \
         '    </div>\n' \
