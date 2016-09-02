@@ -121,9 +121,9 @@ class MyMail:
         return body
 
     def get_posts_divs(self, title, markdown, link):
-        content = self.reegex_utf8decode(markdown)
+        content = self.regex_utf8decode(markdown)
         content = (content[:150] + '...') if len(content) > 150 else (content + '...')
-        title = self.reegex_utf8decode(title)
+        title = self.regex_utf8decode(title)
         div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
         '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
         '                    <b>' + content + '</b><br><br>\n' \
