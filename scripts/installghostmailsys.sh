@@ -86,7 +86,7 @@ douninstall()
 croninstall()
 {
 	echo "Appending rule to crontab..."
-	APPEND=`/bin/sed -i.bak '$ a \0    6  * * *   root    python /opt/ghostsubscribermail/main.py &\' /etc/crontab`
+	APPEND=`/bin/sed -i.bak '$ a \00    8  * * *   root    python /opt/ghostsubscribermail/main.py &\' /etc/crontab`
 	STAT=$?
 	sleep 1
 	checkstatus /bin/cp -R ../../ghostsubscribermail /$INSTALLPATH/ STATCPY
