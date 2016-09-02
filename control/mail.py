@@ -121,17 +121,21 @@ class MyMail:
         return body
 
     def get_posts_divs(self, title, markdown, link):
-        nomarkdowns = re.sub('[!#$\[\]\(\)]', '', markdown)
-        nourl = re.sub('((/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', re.sub('((http|https):+(/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', nomarkdowns))
-        no2encode = nourl.decode('utf-8').encode('raw_unicode_escape').decode('utf-8')
-        html = no2encode.encode('ascii', 'xmlcharrefreplace')
-        html = (html[:150] + '...') if len(html) > 150 else (html + '...')
+        content = self.reegex_utf8decode(markdown)
+        content = (content[:150] + '...') if len(content) > 150 else (content + '...')
+        title = self.reegex_utf8decode(title)
         div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
         '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
-        '                    <b>' + html + '</b><br><br>\n' \
+        '                    <b>' + content + '</b><br><br>\n' \
         '                    <a href="' + link + '" style="font-size: 70%;color=white;"> Check More About This Here </a>\n' \
         '                </div>\n'
         return div
+
+    def regex_utf8decode(self, markdown):
+        nomarkdowns = re.sub('[!#$\[\]\(\)]', '', markdown)
+        nourl = re.sub('((/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', re.sub('((http|https):+(/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', nomarkdowns))
+        no2encode = nourl.decode('utf-8').encode('raw_unicode_escape').decode('utf-8')
+        return no2encode.encode('ascii', 'xmlcharrefreplace')
 
     def PrintException(self):
         """
