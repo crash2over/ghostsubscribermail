@@ -2,6 +2,7 @@
 import smtplib
 import linecache
 import sys
+import re
 from utils import config
 
 from email.mime.multipart import MIMEMultipart
@@ -120,7 +121,11 @@ class MyMail:
         return body
 
     def get_posts_divs(self, title, markdown, link):
-        markdown = (markdown[:150] + '...') if len(markdown) > 150 else (markdown + '...')
+        nomarkdowns = re.sub('[!#$\[\]\(\)]', '', markdown)
+        nourl = re.sub('((http|https):+(/)+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)', '', nomarkdowns)
+        no2encode = nourl.decode('utf-8').encode('raw_unicode_escape').decode('utf-8')
+        html = no2encode.encode('ascii', 'xmlcharrefreplace')
+        html = (html[:150] + '...') if len(html) > 150 else (html + '...')
         div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
         '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
         '                    <b>' + markdown + '</b><br><br>\n' \
