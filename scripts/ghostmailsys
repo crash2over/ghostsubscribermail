@@ -1,0 +1,69 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          ghostmailsystem
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Example initscript
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+ROOT_PATH="opt"
+PROG_PATH="ghostsubscribermail"
+PROG_MAIL="main.py"
+
+start()
+{
+	PS_OUT=`ps ax | grep "/$ROOT_PATH/$PROG_PATH/$PROG_MAIL" | grep -v grep`;
+	DATE=`date`
+	if [ "$PS_OUT" != "" ]; then
+                echo "$DATE : Program /$ROOT_PATH/$PROG_PATH/$PROG_MAIL Newsletter Still  Running..."
+                sleep 1
+                exit 0
+        else
+                python /$ROOT_PATH/$PROG_PATH/$PROG_MAIL &
+                echo "$DATE : /$ROOT_PATH/$PROG_PATH/$PROG_MAIL Newsletter started"
+                sleep 1
+        fi
+}
+
+stop()
+{
+	PS_OUT=`ps ax | grep "/$ROOT_PATH/$PROG_PATH/$PROG_MAIL" | grep -v grep | awk '{print $1}'`;
+	DATE=`date`
+	if [ "$PS_OUT" != "" ]; then
+		echo "Storer Killed With PID [$PS_OUT]"
+		kill -9 $PS_OUT
+	else
+		echo "No Ghost Mail Newsletter Running..."
+	fi
+}
+
+## Check to see if we are running as root first.
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root" 1>&2
+    exit 1
+fi
+
+case "$1" in
+    start)
+        start
+        exit 0
+    ;;
+    stop)
+	stop
+	exit 0
+    ;;
+    restart)
+	stop
+	sleep 1
+	start
+	exit 0
+    ;;
+    **)
+        echo "Usage: $0 {start|stop|restart}" 1>&2
+        exit 1
+    ;;
+esac

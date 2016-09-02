@@ -1,0 +1,29 @@
+#This file es for develop purposes you don't need this database test in command line
+
+#To get update_at for updated post
+#SELECT ghostsubscribemail.mail_news.idmail_news, ghostsubscribemail.mail_news.updated_at FROM ghost.posts INNER JOIN ghostsubscribemail.mail_news ON ghost.posts.uuid = ghostsubscribemail.mail_news.uuid;
+
+#To get max published_at in ghostsubscribemail
+#SELECT max(published_at) FROM ghostsubscribemail.mail_news;
+
+#New post on ghost from last published_at in ghostsubscribemail
+#SELECT ghost.posts.uuid, DATE_FORMAT(ghost.posts.updated_at, '%Y-%m-%d %H:%i:%s'), DATE_FORMAT(ghost.posts.published_at, '%Y-%m-%d %H:%i:%s') FROM ghost.posts WHERE ghost.posts.published_at > "2016-08-26 16:28:15";
+
+#Anything in ghostsubscribemail?
+#SELECT * from ghostsubscribemail.mail_news LIMIT 1;
+
+#To get min published_at in ghost for initialize mail system 1 post dummy
+#SELECT uuid, updated_at, min(published_at), html FROM ghost.posts;
+
+#Insert new row to ghostsubscribemail.mail_news
+#INSERT INTO ghostsubscribemail.mail_news (uuid, updated_at, published_at) values ("e56a4b34-005d-4931-92c5-417be7a0008a", "2016-08-26 16:28:32", "2016-08-26 17:48:35");
+
+#Compare max published_at posts
+#SELECT ghost.posts.uuid FROM ghost.posts INNER JOIN ghostsubscribemail.mail_news ON ghost.posts.published_at > ghostsubscribemail.mail_news.published_at AND ghost.posts.uuid != ghostsubscribemail.mail_news.uuid
+
+#Getting Logo URI
+#SELECT ghost.settings.value FROM ghost.settings WHERE STRCMP(ghost.settings.key,"logo")=0;
+#SELECT ghost.settings.value FROM ghost.settings WHERE STRCMP(ghost.settings.key,"title")=0;
+
+#Getting Subscribed
+#SELECT ghost.subscribers.email FROM ghost.subscribers WHERE STRCMP(ghost.subscribers.status,"subscribed")=0;

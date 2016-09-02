@@ -1,0 +1,38 @@
+# This software is inteded to resolve my needs with newsletter using Ghost Blog 0.9.0
+# there is no warranty using this program, but i am open about the improvement
+# and even if you wanna do something about the code you can. I assume here all for debian
+# base system, if you use another distro... you know... google a little.
+
+#You can send me an email to:
+
+crash@cubemelink.com.mx
+
+#Info about develop
+Linux 3.16.0-4-amd64 #1 SMP Debian 3.16.7-ckt25-2 (2016-04-08) x86_64 GNU/Linux
+mysql  Ver 14.14 Distrib 5.5.49, for debian-linux-gnu (x86_64) using readline 6.3
+Python 2.7.9
+Ghost 0.9.0
+
+#For Python dependency you can use PIP or EASY_INSTALL
+MySQL-python 1.2.5
+
+#for database backup structure no data
+mysqldump -h xxx.xxx.xxx.xxx -u user -p database --no-data --databases --add-drop-database > mydb.sql
+
+#Upload database to MySQL
+mysql -u user -p < mydb.sql	
+
+#Now if you set program as a daemon you must set an init script in /etc/init.d/ and update-rc.d for user runlevels
+#you can find one in this folder and an install script for make it easy for you
+
+installghostmailsys.sh
+
+
+#Now if you set program not as a daemon you must use Cron & Crontab to program a task here is the line
+#Open crontab located in /etc/crontab and add this line and set your rute:
+
+0    20  * * *   root    python /opt/ghostsubscribermail/main.py &
+
+#just restart cron
+
+sudo service cron restart
