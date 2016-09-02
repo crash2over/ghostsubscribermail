@@ -128,7 +128,7 @@ class MyMail:
         html = (html[:150] + '...') if len(html) > 150 else (html + '...')
         div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
         '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
-        '                    <b>' + markdown + '</b><br><br>\n' \
+        '                    <b>' + html + '</b><br><br>\n' \
         '                    <a href="' + link + '" style="font-size: 70%;color=white;"> Check More About This Here </a>\n' \
         '                </div>\n'
         return div
