@@ -113,7 +113,7 @@ class MyMail:
         for i in range(postlen):
             body += self.get_posts_divs(self.listposts[i]['title'], self.listposts[i]['markdown'], self.listposts[i]['link'])
         body += '        <br><br><br><br>\n' \
-        '                <p style="color: ' + config.FOOTER + ';font-size: 90%;pointer-events: none;cursor: default;"><b>Copyright © ViajandoConAlas.com.mx</b></p>\n' \
+        '                <p style="color: ' + config.FOOTER + ';font-size: 90%;pointer-events: none;cursor: default;"><b>Copyright © ViajandoConAlas.com.mx Powered By Cubemelink.com.mx</b></p>\n' \
         '            </div>\n' \
         '        </div>\n' \
         '    </div>\n' \
@@ -126,7 +126,7 @@ class MyMail:
         title = self.regex_utf8decode(title)
         div = '           <li><h3 style="color: ' + config.DIVTITLE + ';">' + title + '</h3></li>\n' \
         '                <div style="color: ' + config.DIVCONTENT + ';width: 40em;overflow: hidden;border: 2px solid #CEECF5 !important;padding: 15px;width: 400px;font-size: 90%;">\n' \
-        '                    <b>' + self.regex_utf8decode(content) + '</b><br><br>\n' \
+        '                    <b>' + content + '</b><br><br>\n' \
         '                    <a href="' + link + '" style="font-size: 70%;color=white;"> Check More About This Here </a>\n' \
         '                </div>\n'
         return div
