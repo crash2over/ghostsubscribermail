@@ -46,14 +46,14 @@ class Main:
         if self.ghost.subscribemail_empty():
             #if empty then init, first post is a dummy
             self.ghost.initialize_subscribemail()
-        self.send_mail(self.ghost.get_recent_published_post())
+        settings = self.ghost.get_ghost_settings()
+        self.send_mail(self.ghost.get_recent_published_post(settings['permalinks']), settings)
         print("*****************************************************")
 
-    def send_mail(self, listposts):
+    def send_mail(self, listposts, settings):
         okmail = False
         try:
             if listposts:
-                settings = self.ghost.get_ghost_settings()
                 subscribers = self.ghost.get_list_subscribers()
                 if subscribers:
                     print("Starting Mail Working: " + time.strftime("%c"))

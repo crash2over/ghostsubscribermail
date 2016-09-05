@@ -64,7 +64,7 @@ class DBGhostPosts:
         except:
             self.PrintException()
 
-    def get_recent_published_post(self):
+    def get_recent_published_post(self, permalinks):
         listposts = []
         query = 'SELECT DATE_FORMAT(max(' + self.maildatabase + '.' + self.mailtable + '.published_at), "%Y-%m-%d %H:%i:%s") FROM ' + self.maildatabase + '.' + self.mailtable
         if self.debug:
@@ -93,9 +93,8 @@ class DBGhostPosts:
                     post['uuid'] = res[i][0]
                     post['updated_at'] = res[i][1]
                     post['published_at'] = res[i][2]
-                    post['link'] = self.url + '/' + res[i][3]
+                    post['link'] = self.build_permalink(permalinks, res[i][3], post['published_at'])
                     post['markdown'] = res[i][5]
-
                     post['title'] = res[i][6]
                     if post['uuid'] is None and post['updated_at'] is None and post['published_at'] is None:
                         if self.debug:
@@ -106,6 +105,13 @@ class DBGhostPosts:
         except:
             self.PrintException()
             return None
+
+    def build_permalink(self, permalink, slug, published_at):
+        if permalink.find('year') > -1 and permalink.find('month') > -1 and permalink.find('day') > -1:
+            dateuri = published_at.split(' ')[0].split('-')
+            return (self.url + '/' + dateuri[0] + '/' + dateuri[1] + '/' + dateuri[2] + '/' + slug)
+        else:
+            return (self.url + '/' + slug)
 
     def mark_post_as_sent(self, listposts):
         for j in range(len(listposts)):
@@ -118,15 +124,19 @@ class DBGhostPosts:
     def get_ghost_settings(self):
         logoquery = 'SELECT ' + self.ghostdatabase + '.settings.value FROM ' + self.ghostdatabase + '.settings WHERE STRCMP(' + self.ghostdatabase + '.settings.key,"logo")=0'
         titlequery = 'SELECT ' + self.ghostdatabase + '.settings.value FROM ' + self.ghostdatabase + '.settings WHERE STRCMP(' + self.ghostdatabase + '.settings.key,"title")=0'
+        permalinksquery = 'SELECT ' + self.ghostdatabase + '.settings.value FROM ' + self.ghostdatabase + '.settings WHERE STRCMP(' + self.ghostdatabase + '.settings.key,"permalinks")=0'
         if self.debug:
             print logoquery
             print titlequery
+            print permalinksquery
         settings = {}
         try:
             logo = self.mydb.executeQryGetCell(logoquery)
             settings['logo'] = logo
             title = self.mydb.executeQryGetCell(titlequery)
             settings['title'] = title
+            permalinks = self.mydb.executeQryGetCell(permalinksquery)
+            settings['permalinks'] = permalinks
 
             if logo is None and title is None:
                 return False
