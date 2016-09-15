@@ -1,0 +1,67 @@
+#!/bin/sh
+# kFreeBSD do not accept scripts as interpreters, using #!/bin/sh and sourcing.
+if [ true != "$INIT_D_SCRIPT_SOURCED" ] ; then
+    set "$0" "$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
+fi
+### BEGIN INIT INFO
+# Provides:          checkghost
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Check For Ghost Process Are UP
+# Description:		Check for ghost process to be up
+#			if not then up again.
+### END INIT INFO
+
+# Author: Crash_ <crash@cubemelink.com.mx>
+#
+
+DESC="Check For Ghost Proccess"
+DAEMON=/usr/bin/node
+ROOT=/home/cubemelink
+GALAS="ghost_alas"
+GCRASH="ghost_crash"
+
+CheckGhostUp()
+{
+	GHOSTCRASH=`ps ax | grep "$DAEMON $ROOT/$GCRASH/index.js" | grep -v grep`;
+	GHOSTALAS=`ps ax | grep "$DAEMON $ROOT/$GALAS/index.js" | grep -v grep`;
+        DATE=`date`
+        if [ "$GHOSTCRASH" != "" ]; then
+#                echo "$DATE : Program ..$DAEMON $ROOT/$GCRASH/ Still  Running..."
+                sleep 1
+        else
+		service $GCRASH stop && service $GCRASH start
+                echo "$DATE : ..$DAEMON $ROOT/$GCRASH/ started"
+                sleep 1
+        fi
+
+        if [ "$GHOSTALAS" != "" ]; then
+#                echo "$DATE : Program ..$DAEMON $ROOT/$GALAS/ Still  Running..."
+                sleep 1
+                exit 0
+        else
+		service $GALAS stop && service $GALAS start
+                echo "$DATE : ..$DAEMON $ROOT/$GALAS/ started"
+                sleep 1
+        fi
+
+}
+
+## Check to see if we are running as root first.
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root" 1>&2
+    exit 1
+fi
+
+case "$1" in
+    CheckGhostUp)
+        CheckGhostUp
+        exit 0
+    ;;
+    **)
+        echo "Usage: $0 {CheckGhostUp}" 1>&2
+        exit 1
+    ;;
+esac
